@@ -38,12 +38,6 @@ Aplicación móvil que muestra información en tiempo real de criptomonedas y su
 - Manejo de errores centralizado
 - Formateo consistente de números y porcentajes
 
-### Performance
-
-- Lazy loading de imágenes
-- Memoización de componentes
-- Optimización de re-renders
-
 ### Testing
 
 - Tests unitarios con Jest
@@ -109,6 +103,7 @@ Se utiliza la API de CoinLore para obtener la información de criptomonedas:
   /components      # Componentes reutilizables
   /containers      # Componentes contenedores
   /domain
+    /core          # Clientes HTTP
     /models        # Interfaces y tipos
     /services      # Servicios de API (OOP)
   /hooks           # Custom hooks
