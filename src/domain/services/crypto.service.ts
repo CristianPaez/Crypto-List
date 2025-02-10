@@ -1,19 +1,24 @@
 import { logErrors } from "@/src/utils/logErrors";
 import { CryptosResponse, ICrypto } from "../models/crypto.model";
+import HttpClient, { IHttpClient } from "@/src/domain/core/HttpClient";
+
+interface ICryptoService {
+  getCryptos(): Promise<CryptosResponse>;
+  getCryptoById(id: string): Promise<ICrypto | undefined>;
+}
 
 // Service class that manages all cryptocurrency-related API calls
-export default class CryptoService {
+class CryptoService implements ICryptoService {
+  private readonly baseUrl = "https://api.coinlore.net/api";
+
+  constructor(private readonly httpClient: IHttpClient) {}
+
   // Method to fetch all cryptocurrencies
-  static async getCryptos(): Promise<CryptosResponse> {
+  async getCryptos(): Promise<CryptosResponse> {
     try {
-      const response = await fetch("https://api.coinlore.net/api/tickers/");
-
-      if (!response.ok) {
-        throw response;
-      }
-
-      const data: CryptosResponse = await response.json();
-      return data;
+      return await this.httpClient.get<CryptosResponse>(
+        `${this.baseUrl}/tickers/`
+      );
     } catch (error) {
       const errorInfo = logErrors(error);
       throw new Error(errorInfo.message);
@@ -21,17 +26,11 @@ export default class CryptoService {
   }
 
   // Method to fetch a specific cryptocurrency by ID
-  static async getCryptoById(id: string): Promise<ICrypto | undefined> {
+  async getCryptoById(id: string): Promise<ICrypto | undefined> {
     try {
-      const response = await fetch(
-        `https://api.coinlore.net/api/ticker/?id=${id}`
+      const data = await this.httpClient.get<ICrypto[]>(
+        `${this.baseUrl}/ticker/?id=${id}`
       );
-
-      if (!response.ok) {
-        throw response;
-      }
-
-      const data: ICrypto[] = await response.json();
       return data?.[0] ?? undefined;
     } catch (error) {
       const errorInfo = logErrors(error);
@@ -39,3 +38,5 @@ export default class CryptoService {
     }
   }
 }
+
+export default new CryptoService(HttpClient);
