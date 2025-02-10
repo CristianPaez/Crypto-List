@@ -12,7 +12,10 @@ type CryptoListItemProps = Readonly<{
 }>;
 
 // Component that displays cryptocurrency information
-const CryptoListItem = ({ crypto, onPress }: CryptoListItemProps) => {
+export default function CryptoListItem({
+  crypto,
+  onPress,
+}: CryptoListItemProps) {
   return (
     <TouchableOpacity style={styles.cryptoItem} onPress={onPress}>
       <View style={styles.cryptoMain}>
@@ -42,6 +45,4 @@ const CryptoListItem = ({ crypto, onPress }: CryptoListItemProps) => {
       </View>
     </TouchableOpacity>
   );
-};
-
-export default CryptoListItem;
+}

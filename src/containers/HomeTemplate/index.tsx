@@ -14,7 +14,7 @@ import { useRouter } from "expo-router";
 import { useCryptoList } from "@/src/hooks/useCryptoList";
 
 // Template component for the home screen, displays the cryptocurrency list with search functionality
-const HomeTemplate = () => {
+export default function HomeTemplate() {
   const router = useRouter();
   const { cryptos, loading, search, handleSearch } = useCryptoList();
 
@@ -64,6 +64,4 @@ const HomeTemplate = () => {
       />
     </SafeAreaView>
   );
-};
-
-export default HomeTemplate;
+}

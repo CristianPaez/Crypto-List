@@ -39,4 +39,5 @@ class CryptoService implements ICryptoService {
   }
 }
 
+// Export a singleton instance
 export default new CryptoService(HttpClient);

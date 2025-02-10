@@ -1,9 +1,9 @@
-// Interfaz para el cliente HTTP
+// Interface for the HTTP client
 export interface IHttpClient {
   get<T>(url: string): Promise<T>;
 }
 
-// Implementación básica del cliente HTTP
+// Basic implementation of the HTTP client
 class HttpClient implements IHttpClient {
   async get<T>(url: string): Promise<T> {
     const response = await fetch(url);
@@ -14,5 +14,5 @@ class HttpClient implements IHttpClient {
   }
 }
 
-// Exportar una instancia singleton
+// Export a singleton instance
 export default new HttpClient();
