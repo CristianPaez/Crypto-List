@@ -47,6 +47,9 @@ const mockCryptos = {
   ],
 };
 
+// Increase the default timeout for async operations
+jest.setTimeout(5000);
+
 describe("useCryptoList", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -63,12 +66,15 @@ describe("useCryptoList", () => {
   it("should fetch cryptos on mount", async () => {
     (CryptoService.getCryptos as jest.Mock).mockResolvedValue(mockCryptos);
 
-    const { result, waitForNextUpdate } = renderHook(() => useCryptoList());
+    const { result } = renderHook(() => useCryptoList());
 
     expect(result.current.loading).toBe(true);
     expect(result.current.cryptos).toEqual([]);
 
-    await waitForNextUpdate();
+    // Wait for the effect to complete
+    await act(async () => {
+      await new Promise(resolve => setTimeout(resolve, 0));
+    });
 
     expect(CryptoService.getCryptos).toHaveBeenCalledTimes(1);
     expect(result.current.cryptos).toEqual(mockCryptos.data);
@@ -77,11 +83,14 @@ describe("useCryptoList", () => {
 
   it("should handle search correctly", async () => {
     (CryptoService.getCryptos as jest.Mock).mockResolvedValue(mockCryptos);
-    const { result, waitForNextUpdate } = renderHook(() => useCryptoList());
+    const { result } = renderHook(() => useCryptoList());
 
-    await waitForNextUpdate();
-
+    // Wait for the effect to complete
     await act(async () => {
+      await new Promise(resolve => setTimeout(resolve, 0));
+    });
+
+    act(() => {
       result.current.handleSearch("bitcoin");
     });
 
@@ -96,12 +105,15 @@ describe("useCryptoList", () => {
       new Error("API Error")
     );
 
-    const { result, waitForNextUpdate } = renderHook(() => useCryptoList());
+    const { result } = renderHook(() => useCryptoList());
 
-    await waitForNextUpdate();
+    // Wait for the effect to complete
+    await act(async () => {
+      await new Promise(resolve => setTimeout(resolve, 0));
+    });
 
-    expect(result.current.cryptos).toEqual([]);
     expect(result.current.loading).toBe(false);
+    expect(result.current.cryptos).toEqual([]);
     expect(consoleSpy).toHaveBeenCalled();
 
     consoleSpy.mockRestore();
@@ -109,14 +121,18 @@ describe("useCryptoList", () => {
 
   it("should return empty results for non-matching search", async () => {
     (CryptoService.getCryptos as jest.Mock).mockResolvedValue(mockCryptos);
-    const { result, waitForNextUpdate } = renderHook(() => useCryptoList());
+    const { result } = renderHook(() => useCryptoList());
 
-    await waitForNextUpdate();
-
+    // Wait for the effect to complete
     await act(async () => {
-      result.current.handleSearch("NonExistentCrypto");
+      await new Promise(resolve => setTimeout(resolve, 0));
     });
 
+    act(() => {
+      result.current.handleSearch("nonexistent");
+    });
+
+    expect(result.current.search).toBe("nonexistent");
     expect(result.current.cryptos).toHaveLength(0);
   });
 });

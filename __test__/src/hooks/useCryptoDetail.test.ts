@@ -1,4 +1,4 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook, act } from "@testing-library/react-hooks";
 import { useCryptoDetail } from "@/src/hooks/useCryptoDetail";
 import CryptoService from "@/src/domain/services/crypto.service";
 
@@ -31,6 +31,9 @@ const mockCrypto = {
   msupply: "21000000",
 };
 
+// Increase the default timeout for async operations
+jest.setTimeout(5000);
+
 describe("useCryptoDetail", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -46,12 +49,15 @@ describe("useCryptoDetail", () => {
   it("should fetch crypto details on mount", async () => {
     (CryptoService.getCryptoById as jest.Mock).mockResolvedValue(mockCrypto);
 
-    const { result, waitForNextUpdate } = renderHook(() => useCryptoDetail());
+    const { result } = renderHook(() => useCryptoDetail());
 
     expect(result.current.loading).toBe(true);
     expect(result.current.crypto).toBeUndefined();
 
-    await waitForNextUpdate();
+    // Wait for the effect to complete
+    await act(async () => {
+      await new Promise(resolve => setTimeout(resolve, 0));
+    });
 
     expect(CryptoService.getCryptoById).toHaveBeenCalledWith("1");
     expect(result.current.crypto).toEqual(mockCrypto);
@@ -69,9 +75,12 @@ describe("useCryptoDetail", () => {
       back: backMock,
     }));
 
-    const { result, waitForNextUpdate } = renderHook(() => useCryptoDetail());
+    const { result } = renderHook(() => useCryptoDetail());
 
-    await waitForNextUpdate();
+    // Wait for the effect to complete
+    await act(async () => {
+      await new Promise(resolve => setTimeout(resolve, 0));
+    });
 
     expect(result.current.crypto).toBeUndefined();
     expect(result.current.loading).toBe(false);

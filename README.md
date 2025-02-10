@@ -74,19 +74,19 @@ cd crypto-list
 2. Instalar dependencias:
 
 ```bash
-npm install --legacy-peer-deps
+yarn install
 ```
 
 3. Iniciar la aplicación:
 
 ```bash
-npx expo start
+yarn start
 ```
 
 4. Ejecutar tests:
 
 ```bash
-npm test
+yarn test
 ```
 
 ## API Utilizada
