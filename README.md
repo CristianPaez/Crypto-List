@@ -1,50 +1,105 @@
-# Welcome to your Expo app 👋
+# Crypto List App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Aplicación móvil que muestra información en tiempo real de criptomonedas y su cambio a USD, desarrollada para una empresa inmobiliaria.
 
-## Get started
+## Screenshots
 
-1. Install dependencies
+### Lista Principal y Búsqueda
+<div style="display: flex; gap: 10px;">
+  <img src="./assets/screenshots/home.png" width="250" alt="Lista Principal">
+  <img src="./assets/screenshots/search.png" width="250" alt="Búsqueda">
+</div>
 
-   ```bash
-   npm install
-   ```
+### Vista Detallada
+<img src="./assets/screenshots/detail.png" width="250" alt="Detalles de Criptomoneda">
 
-2. Start the app
+## Requerimientos Técnicos Implementados
 
-   ```bash
-    npx expo start
-   ```
+### Tecnologías Base
+- ✅ TypeScript
+- ✅ React Native
+- ✅ Soporte para iOS y Android
 
-In the output, you'll find options to open the app in a
+### Arquitectura y Estructura
+- Patrón de Arquitectura Orientada a Objetos (OOP)
+- Servicios encapsulados para manejo de API
+- Modelos de datos tipados
+- Separación de responsabilidades (Components, Containers, Services)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+### Mejores Prácticas
+- Clean Code
+- SOLID Principles
+- Custom Hooks para lógica reutilizable
+- Manejo de errores centralizado
+- Formateo consistente de números y porcentajes
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Performance
+- Lazy loading de imágenes
+- Memoización de componentes
+- Optimización de re-renders
 
-## Get a fresh project
+### Testing
+- Tests unitarios con Jest
+- Tests de integración con React Testing Library
+- Cobertura de componentes principales
 
-When you're ready, run:
+## Funcionalidades
 
+1. Lista de Criptomonedas
+   - Visualización de precios en USD
+   - Capitalización de mercado
+   - Volumen de trading
+
+2. Filtrado
+   - Búsqueda por nombre de criptomoneda
+   - Actualización en tiempo real
+
+3. Vista Detallada
+   - Estadísticas completas
+   - Cambios porcentuales (1h, 24h, 7d)
+   - Supply information
+
+## Instalación y Ejecución
+
+1. Clonar el repositorio:
 ```bash
-npm run reset-project
+git clone [URL_REPOSITORIO]
+cd crypto-list
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+2. Instalar dependencias:
+```bash
+npm install
+```
 
-## Learn more
+3. Iniciar la aplicación:
+```bash
+npx expo start
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+4. Ejecutar tests:
+```bash
+npm test
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## API Utilizada
 
-## Join the community
+Se utiliza la API de CoinLore para obtener la información de criptomonedas:
+- Endpoint principal: `https://api.coinlore.net/api/tickers/`
+- Documentación: [CoinLore API](https://www.coinlore.com/cryptocurrency-data-api)
 
-Join our community of developers creating universal apps.
+## Estructura del Proyecto
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```
+/src
+  /components      # Componentes reutilizables
+  /containers      # Componentes contenedores
+  /domain
+    /models        # Interfaces y tipos
+    /services      # Servicios de API (OOP)
+  /hooks           # Custom hooks
+  /utils           # Utilidades
+/app               # Rutas de la aplicación
+/__test__         # Tests
+```
+
