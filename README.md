@@ -74,7 +74,7 @@ cd crypto-list
 2. Instalar dependencias:
 
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
 
 3. Iniciar la aplicación:
